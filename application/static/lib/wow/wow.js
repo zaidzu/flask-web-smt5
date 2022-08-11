@@ -55,7 +55,7 @@
 
   function extend(custom, defaults) {
     for (var key in defaults) {
-      if (custom[key] == null) {
+      if (custom[key] === null) {
         var value = defaults[key];
         custom[key] = value;
       }
@@ -74,11 +74,11 @@
     var detail = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
 
     var customEvent = void 0;
-    if (document.createEvent != null) {
+    if (document.createEvent !== null) {
       // W3C DOM
       customEvent = document.createEvent('CustomEvent');
       customEvent.initCustomEvent(event, bubble, cancel, detail);
-    } else if (document.createEventObject != null) {
+    } else if (document.createEventObject !== null) {
       // IE DOM < 9
       customEvent = document.createEventObject();
       customEvent.eventType = event;
@@ -90,21 +90,21 @@
   }
 
   function emitEvent(elem, event) {
-    if (elem.dispatchEvent != null) {
+    if (elem.dispatchEvent !== null) {
       // W3C DOM
       elem.dispatchEvent(event);
-    } else if (event in (elem != null)) {
+    } else if (event in (elem !== null)) {
       elem[event]();
-    } else if ('on' + event in (elem != null)) {
+    } else if ('on' + event in (elem !== null)) {
       elem['on' + event]();
     }
   }
 
   function addEvent(elem, event, fn) {
-    if (elem.addEventListener != null) {
+    if (elem.addEventListener !== null) {
       // W3C DOM
       elem.addEventListener(event, fn, false);
-    } else if (elem.attachEvent != null) {
+    } else if (elem.attachEvent !== null) {
       // IE DOM
       elem.attachEvent('on' + event, fn);
     } else {
@@ -114,10 +114,10 @@
   }
 
   function removeEvent(elem, event, fn) {
-    if (elem.removeEventListener != null) {
+    if (elem.removeEventListener !== null) {
       // W3C DOM
       elem.removeEventListener(event, fn, false);
-    } else if (elem.detachEvent != null) {
+    } else if (elem.detachEvent !== null) {
       // IE DOM
       elem.detachEvent('on' + event, fn);
     } else {
@@ -207,7 +207,7 @@
         }
         var currentStyle = el.currentStyle;
 
-        return (currentStyle != null ? currentStyle[prop] : void 0) || null;
+        return (currentStyle !== null ? currentStyle[prop] : void 0) || null;
       }
     };
   };
@@ -248,7 +248,7 @@
       this.scrollCallback = this.scrollCallback.bind(this);
       this.scrolled = true;
       this.config = extend(options, this.defaults);
-      if (options.scrollContainer != null) {
+      if (options.scrollContainer !== null) {
         this.config.scrollContainer = document.querySelector(options.scrollContainer);
       }
       // Map of elements to animation names:
@@ -313,7 +313,7 @@
         this.stopped = true;
         removeEvent(this.config.scrollContainer || window, 'scroll', this.scrollHandler);
         removeEvent(window, 'resize', this.scrollHandler);
-        if (this.interval != null) {
+        if (this.interval !== null) {
           clearInterval(this.interval);
         }
       }
@@ -354,7 +354,7 @@
       value: function show(box) {
         this.applyStyle(box);
         box.className = box.className + ' ' + this.config.animateClass;
-        if (this.config.callback != null) {
+        if (this.config.callback !== null) {
           this.config.callback(box);
         }
         emitEvent(box, this.wowEvent);
